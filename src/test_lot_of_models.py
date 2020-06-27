@@ -1,116 +1,106 @@
 import numpy as np
-import tester
-#import summarize
-import summarize_new
+from tester import Tester
+from summarize_new import summarize, plot_all
 import os
 
+default_models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq',
+              'published_predictions_stef_euc_o2', 'model_daily_histogram',
+              'model_segment_means', 'model_weekly_histogram', 'model_prophet']
 
 
+def test_models(models=default_models, speed=1, radius_of_robot=1, weighted_encounters=False):
+    model_dir = '../models2'
+    test_dir = '../data2/time_windows/'
+    times_path = '../data2/test_times.txt'
 
-speed = 2.
-radius_of_robot = 2.
-weighted_encounters = True
-print('speed: ' + str(speed))
-print('radius_of_robot: ' + str(radius_of_robot))
-print('weighted_encounters: ' + str(weighted_encounters))
+    tester = Tester(radius_of_robot=radius_of_robot)
+    times = np.loadtxt(times_path, dtype='int')
 
-"""
-Before run this, please create new directories with your models name inside following directories; 'models' and 'results'
-and, change the variable 'model' with the same name of the directories you created.
+    print('speed: ' + str(speed))
+    print('radius_of_robot: ' + str(radius_of_robot))
+    print('weighted_encounters: ' + str(weighted_encounters))
 
-You can find the list of positions in '../data/positions.txt' (x, y, angle)
-Model outputs should be same as this file with an additional column of weights (order of rows is not important for testing method).
+    result_dir = '../results/output'
+    edges_of_cell = [0.5, 0.5]
 
-Here, are the parameters of grid;
+    for model in models:
+        print('testing  ' + model)
+        try:
+            os.mkdir(result_dir)
+        except OSError as error:
+            pass
 
-edges of cells: x...0.5 [m], y...0.5 [m], angle...pi/4.0 [rad]
-number of cells: x...24, y...33, angles...8
-center of "first" cell: (-9.5, 0.25, -3.0*pi/4.0)
-center of "last" cell: (2.0, 16.25, pi) 
+        output_path = result_dir + '/' + str(model) + '_output.txt'
+        if os.path.exists(output_path):
+            os.remove(output_path)
 
-If you change the argument 'create_video' to True, there will be video of every time window in results
+        for time in times:
+            path_model = model_dir + '/' + str(model) + '/' + str(time) + '_model.txt'
+            test_data_path = test_dir + str(time) + '_test_data.txt'
+            result = tester.test_model(path_model=path_model, path_data=test_data_path, testing_time=time, model_name=model, edges_of_cell=edges_of_cell, speed=speed, weighted_encounters=weighted_encounters)
+            with open(output_path, 'a') as file:
+                file.write(' '.join(str(value) for value in result) + '\n')
 
-outputs will be written in ../results/$model/output.txt in following format;
-list of values; [testing_time, number_of_detections_in_testing_data, interactions_of_dummy_model_clockwise, interactions_of_dummy_model_counterclockwise, interactions_of_real_model_clockwise, interactions_of_real_model_counterclockwise, total_weight_in_clockwise, total_weight_in_counterclockwise, total_interactions_of_chosen_trajectory]
+    for model in models:
 
-Since this code is prepared in a short time for scientific reasons, sorry in advance for any ambiguity
-"""
+        print('\n statistics of ' + model)
+        output_path = result_dir + '/' + str(model) + '_output.txt'
+        summarize(output_path)
 
-tester = tester.Tester(radius_of_robot=radius_of_robot)
-
-'''you can run this to see trivial output. If you want to run this for your model, make sure that you uncommented following line and delete the next one (you may also want to change 'create_video' to False) '''
-
-times = np.loadtxt('../data/test_times.txt', dtype='int')
-#times = np.loadtxt('../data/test_times_winter.txt', dtype='int')
-#times = [1554092829, 1554105954]
-
-# individual models
-#models = ['published_ral_3_clusters_3_periodicities']  # calculated by buggy code
-#models = ['published_cliffmap_model_pq']
-#models = ['published_predictions_stef_euc_o2']
-#models = ['ral_variant_3_clusters_2_periodicities']  # possible to calculate, repaired bug in fremen
-#models = ['ral_variant_3_clusters_2_periodicities', 'test_3_clusters_2_periodicities', 'test2_3_clusters_2_periodicities', 'test3_3_clusters_2_periodicities']
-
-# models, we need to compare
-models = ['published_ral_3_clusters_3_periodicities']
-#models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities', 'test3_3_clusters_2_periodicities']
-#models = ['test_speedstep01_3_clusters_2_periodicities']
-#models = ['cost_test_minus_speed_3_clusters_2_periodicities']
-#models = ['cost_exp_3_clusters_2_periodicities']
-#models = ['cost_pow2_3_clusters_2_periodicities']
-#models = ['cost_exp_F_3_clusters_2_periodicities']
-#models = ['cost_F_3_clusters_3_periodicities']
-#models = ['cost_winter_3_clusters_3_periodicities']
-#models = ['cost_chiF_3_clusters_5_periodicities']
-#models = ['cost_chiF_10_clusters_4_periodicities']
-#models = ['integral_s01_10_clusters_4_periodicities']
-#models = ['chiF_1_clusters_4_periodicities']
-#models = ['chiF_cond_Ceq15_5_clusters_4_periodicities']
-#models = ['chiF_1_clusters_0_periodicities', 'chiF_2_clusters_0_periodicities', 'chiF_3_clusters_0_periodicities', 'chiF_1_clusters_1_periodicities', 'chiF_2_clusters_1_periodicities', 'chiF_3_clusters_1_periodicities', 'chiF_1_clusters_2_periodicities', 'chiF_2_clusters_2_periodicities', 'chiF_3_clusters_2_periodicities', 'chiF_1_clusters_3_periodicities', 'chiF_2_clusters_3_periodicities', 'chiF_3_clusters_3_periodicities', 'chiF_1_clusters_4_periodicities', 'chiF_2_clusters_4_periodicities', 'chiF_3_clusters_4_periodicities']
-# models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities', 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
-#models = ['RAL2020_3_clusters_3_periodicities']
-#models = ['occ_grid']
-models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
-#models = ['ral_variant_3_clusters_2_periodicities']
-models = ['cost_F_3_clusters_3_periodicities']
-#models = ['published_predictions_stef_euc_o2']
+    plot_all([result_dir + '/' + str(model) + '_output.txt' for model in models], models, result_dir + 'models.png')
 
 
+def test_with_different_params(model, speeds=(1, ), radii_of_robot=(1, ), weighted_encounters_opts=(False, )):
 
-#result_dir = 'output_for_3rd_version'
-result_dir = 'output'
-#result_dir = 'output_CET'
-model_dir = '../models'
-
-
-edges_of_cell = [0.5, 0.5]
-
-for model in models:
-    #break # delete me :)
     print('testing  ' + model)
-    # creating path for the outputs of planner
+
+    result_dir = '../results/output'
+    edges_of_cell = [0.5, 0.5]
+
     try:
-        os.mkdir('../results/' + result_dir)
+        os.mkdir(result_dir)
     except OSError as error:
         pass
 
-    output_path = '../results/' + result_dir + '/' + str(model) + '_output.txt'
-    if os.path.exists(output_path):
-        os.remove(output_path)
+    models = []
+    outputs = []
 
-    for time in times:
-        path_model = model_dir + '/' + str(model) + '/' + str(time) + '_model.txt'
-        #path_model = model_dir + '/' + str(model) + '/' + str(time) + '_model.txt.npy'
-        test_data_path = '../data/time_windows/' + str(time) + '_test_data.txt'
-        #test_data_path = '../data/time_windows_CET/' + str(time) + '_test_data.txt'
-        #test_data_path = '../data/time_windows_winter/' + str(time) + '_test_data.txt'
-        result = tester.test_model(path_model=path_model, path_data=test_data_path, testing_time=time, model_name=model, edges_of_cell=edges_of_cell, speed=speed, weighted_encounters=weighted_encounters)
-        with open(output_path, 'a') as file:
-            file.write(' '.join(str(value) for value in result) + '\n')
+    for speed in speeds:
+        for radius_of_robot in radii_of_robot:
+            for weighted_encounters in weighted_encounters_opts:
 
-for model in models:
+                current_model = "{}_{}_{}_{}".format(model, speed, radius_of_robot, weighted_encounters)
+                models.append(current_model)
 
-    print('\n statistics of ' + model)
-    output_path = '../results/' + result_dir + '/' + str(model) + '_output.txt'
-    #summarize.summarize(output_path)
-    summarize_new.summarize(output_path)
+                model_dir = '../models2'
+                test_dir = '../data2/time_windows/'
+                times_path = '../data2/test_times.txt'
+
+                tester = Tester(radius_of_robot=radius_of_robot)
+                times = np.loadtxt(times_path, dtype='int')
+
+                print('speed: ' + str(speed))
+                print('radius_of_robot: ' + str(radius_of_robot))
+                print('weighted_encounters: ' + str(weighted_encounters))
+
+                output_path = result_dir + '/' + current_model + '_output.txt'
+                outputs.append(output_path)
+
+                # if os.path.exists(output_path):
+                #     os.remove(output_path)
+                #
+                # for time in times:
+                #     path_model = model_dir + '/' + str(model) + '/' + str(time) + '_model.txt'
+                #     test_data_path = test_dir + str(time) + '_test_data.txt'
+                #     result = tester.test_model(path_model=path_model, path_data=test_data_path, testing_time=time,
+                #                                model_name=model, edges_of_cell=edges_of_cell, speed=speed,
+                #                                weighted_encounters=weighted_encounters)
+                #     with open(output_path, 'a') as file:
+                #         file.write(' '.join(str(value) for value in result) + '\n')
+                #
+                # print('\n statistics of {} with speed={}m/s, r={}m and weighted encounters set to {}.'.format(
+                #     model, speed, radius_of_robot, weighted_encounters))
+                #
+                # summarize(output_path)
+
+    plot_all(outputs, models, result_dir + 'models.png')
