@@ -25,6 +25,14 @@ def summarize(text_file_to_analyze):
     plt.close()
     # return
 
+    data_plot = np.loadtxt(text_file_to_analyze)
+    max_weight = np.max(data_plot[:, -3])
+    max_ids = np.max(data_plot[:, 1])
+    plt.plot(data_plot[:, -3]/max_weight, color='r')
+    plt.plot(data_plot[:, 1]/max_ids, color='g')
+    plt.savefig(text_file_to_analyze + '_correlation.png')
+    plt.close()
+
 
 """
 

@@ -13,7 +13,7 @@ class Tester:
     def __init__(self, radius_of_robot):
         self.radius_of_robot = radius_of_robot
 
-    def test_model(self, path_model, path_data, testing_time, model_name, edges_of_cell=np.array([0.5, 0.5]), speed=1.0, create_video=False):
+    def test_model(self, path_model, path_data, testing_time, model_name, edges_of_cell=np.array([0.5, 0.5]), speed=1.0, weighted_encounters=False):
         '''
 
         :param path_model: path for the model output in following format; x y angle weight
@@ -156,13 +156,13 @@ class Tester:
 
         #start = time()
 
-        path_finder.extract_trajectory(min_time, speed=speed, create_video=create_video)
+        path_finder.extract_trajectory(min_time, speed=speed)
         #finish = time()
         #print('extract_trajectory')
         #print(finish-start)
 
         #start = time()
-        result_1 = path_finder.extract_interactions(test_data, radius=self.radius_of_robot, create_video=create_video)
+        result_1 = path_finder.extract_interactions(test_data, radius=self.radius_of_robot, weighted_encounters=weighted_encounters)
         results.append(result_1)
         #finish = time()
         #print('extract_interactions')
@@ -181,12 +181,12 @@ class Tester:
         #print('get_mean_path_weight')
         #print(finish-start)
         #start = time()
-        path_finder.extract_trajectory(min_time, speed=speed, create_video=create_video)
+        path_finder.extract_trajectory(min_time, speed=speed)
         #finish = time()
         #print('extract_trajectory')
         #print(finish-start)
         #start = time()
-        result_2 = path_finder.extract_interactions(test_data, radius=self.radius_of_robot, create_video=create_video)
+        result_2 = path_finder.extract_interactions(test_data, radius=self.radius_of_robot, weighted_encounters=weighted_encounters)
         results.append(result_2)
         #finish = time()
         #print('extract_interactions')
@@ -202,12 +202,6 @@ class Tester:
         #finish_all = time()
         #print('second part: ' + str(finish_all-start_all))
 
-        if create_video:
-            path_trajectory = '../results/trajectory.txt'
-            path_interactions = '../results/interactions.txt'
-            vm = make_video.VideoMaker(path_data=path_data, path_borders=path_borders, path_trajectory=path_trajectory, path_interactions=path_interactions)
-            vm.make_video(str(model_name) + '/' + str(testing_time), with_robot=True, radius_of_robot=self.radius_of_robot)
-
         return results
 
 
@@ -220,6 +214,6 @@ if __name__ == "__main__":
     
     edges_of_cell = np.array([0.5, 0.5])
     start = time()
-    print(tester.test_model('../models/1_cluster_9_periods/1554105994_model.txt', '../data/time_windows/1554105994_test_data.txt', testing_time=1554105994, model_name='WHyTeS', edges_of_cell=edges_of_cell, speed=1.0, create_video=False))
+    print(tester.test_model('../models/1_cluster_9_periods/1554105994_model.txt', '../data/time_windows/1554105994_test_data.txt', testing_time=1554105994, model_name='WHyTeS', edges_of_cell=edges_of_cell, speed=1.0, weighted_encounters=False))
     finish = time()
     print(('first&second part: ' + str(finish-start)))

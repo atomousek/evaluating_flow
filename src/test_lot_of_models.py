@@ -4,6 +4,16 @@ import tester
 import summarize_new
 import os
 
+
+
+
+speed = 2.
+radius_of_robot = 2.
+weighted_encounters = True
+print('speed: ' + str(speed))
+print('radius_of_robot: ' + str(radius_of_robot))
+print('weighted_encounters: ' + str(weighted_encounters))
+
 """
 Before run this, please create new directories with your models name inside following directories; 'models' and 'results'
 and, change the variable 'model' with the same name of the directories you created.
@@ -26,7 +36,7 @@ list of values; [testing_time, number_of_detections_in_testing_data, interaction
 Since this code is prepared in a short time for scientific reasons, sorry in advance for any ambiguity
 """
 
-tester = tester.Tester(radius_of_robot=1.)
+tester = tester.Tester(radius_of_robot=radius_of_robot)
 
 '''you can run this to see trivial output. If you want to run this for your model, make sure that you uncommented following line and delete the next one (you may also want to change 'create_video' to False) '''
 
@@ -60,10 +70,10 @@ models = ['published_ral_3_clusters_3_periodicities']
 # models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities', 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
 #models = ['RAL2020_3_clusters_3_periodicities']
 #models = ['occ_grid']
-# models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities']#, 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
-models = ['ral_variant_3_clusters_2_periodicities']
+models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
+#models = ['ral_variant_3_clusters_2_periodicities']
 models = ['cost_F_3_clusters_3_periodicities']
-models = ['published_predictions_stef_euc_o2']
+#models = ['published_predictions_stef_euc_o2']
 
 
 
@@ -74,7 +84,6 @@ model_dir = '../models'
 
 
 edges_of_cell = [0.5, 0.5]
-speed = 1.
 
 for model in models:
     #break # delete me :)
@@ -95,7 +104,7 @@ for model in models:
         test_data_path = '../data/time_windows/' + str(time) + '_test_data.txt'
         #test_data_path = '../data/time_windows_CET/' + str(time) + '_test_data.txt'
         #test_data_path = '../data/time_windows_winter/' + str(time) + '_test_data.txt'
-        result = tester.test_model(path_model=path_model, path_data=test_data_path, testing_time=time, model_name=model, edges_of_cell=edges_of_cell, speed=speed, create_video=False)
+        result = tester.test_model(path_model=path_model, path_data=test_data_path, testing_time=time, model_name=model, edges_of_cell=edges_of_cell, speed=speed, weighted_encounters=weighted_encounters)
         with open(output_path, 'a') as file:
             file.write(' '.join(str(value) for value in result) + '\n')
 

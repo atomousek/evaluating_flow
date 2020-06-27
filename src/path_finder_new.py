@@ -88,7 +88,7 @@ class PathFinder:
         self.graph.remove_nodes_from(list(zip(rows, columns)))
 
 
-    def extract_trajectory(self, start_time, speed, create_video=False, time_step=0.1):
+    def extract_trajectory(self, start_time, speed, time_step=0.1):
         directions = [0.0, np.pi / 4, np.pi / 2, 3 * np.pi / 4, np.pi, -3 * np.pi / 4, -np.pi / 2, -np.pi / 4]
         self.trajectory = []
         time = start_time
@@ -136,8 +136,6 @@ class PathFinder:
 
 
             time = time_next
-        if create_video:
-            np.savetxt('../results/trajectory.txt', np.array(self.trajectory))
         return self.trajectory
 
 
@@ -159,11 +157,13 @@ class PathFinder:
             print("no path!")
 
 
-    def extract_interactions(self, data, radius, create_video=False, time_step=0.1):
+    def extract_interactions(self, data, radius, weighted_encounters, time_step=0.1):
         radius2 = radius * radius
         #interactions = []
-        intensity = 0  # uhly
-        interactions = 0  # kontakty
+        if weighted_encounters:
+            intensity = 0  # angles
+        else:
+            interactions = 0  # contacts
         counter = 0
         if data.ndim != 2:
             return 0
@@ -175,12 +175,14 @@ class PathFinder:
                 tmp = data[tmp, :]  # numpy version
                 #dists = np.sqrt(np.sum((tmp[:, 1:3] - position[1:3])**2, axis=1))
                 #tmp = tmp[dists <= radius, :]
-                dists = np.sum((tmp[:, 1:3] - position[1:3])**2, axis=1)  # kontakty
+                dists = np.sum((tmp[:, 1:3] - position[1:3])**2, axis=1)
                 #tmp = tmp[dists <= radius2, :]
                 #interactions.append(tmp)
-                tmp = tmp[dists <= radius2, 3]  # uhly
-                intensity += self._angle_weight(tmp, position[5])  # uhly
-                #interactions += np.sum(dists <= radius2)  # kontakty
+                if weighted_encounters:
+                    tmp = tmp[dists <= radius2, 3]  # angles
+                    intensity += self._angle_weight(tmp, position[5])  # angles
+                else:
+                    interactions += np.sum(dists <= radius2)  # contacts
             
         #if interactions != []:
         #    interactions = np.vstack(interactions)
@@ -193,8 +195,10 @@ class PathFinder:
         #    return len(interactions)
         #else:
         #    return 0
-        return intensity  # uhly
-        #return interactions  # kontakty
+        if weighted_encounters:
+            return intensity  # angles
+        else:
+            return interactions  # contacts
 
 
     def get_mean_path_weight(self):
@@ -206,8 +210,8 @@ class PathFinder:
                 #if weight['weight'] > total_weight:
                 #    total_weight = weight['weight']
 
-        return total_weight/len(self.shortest_path)
-        #return total_weight
+        #return total_weight/len(self.shortest_path)
+        return total_weight
 
 
     def _angle_weight(self, A, b):
