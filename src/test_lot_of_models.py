@@ -42,7 +42,7 @@ times = np.loadtxt('../data/test_times.txt', dtype='int')
 #models = ['ral_variant_3_clusters_2_periodicities', 'test_3_clusters_2_periodicities', 'test2_3_clusters_2_periodicities', 'test3_3_clusters_2_periodicities']
 
 # models, we need to compare
-#models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities']
+models = ['published_ral_3_clusters_3_periodicities']
 #models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities', 'test3_3_clusters_2_periodicities']
 #models = ['test_speedstep01_3_clusters_2_periodicities']
 #models = ['cost_test_minus_speed_3_clusters_2_periodicities']
@@ -57,15 +57,15 @@ times = np.loadtxt('../data/test_times.txt', dtype='int')
 #models = ['chiF_1_clusters_4_periodicities']
 #models = ['chiF_cond_Ceq15_5_clusters_4_periodicities']
 #models = ['chiF_1_clusters_0_periodicities', 'chiF_2_clusters_0_periodicities', 'chiF_3_clusters_0_periodicities', 'chiF_1_clusters_1_periodicities', 'chiF_2_clusters_1_periodicities', 'chiF_3_clusters_1_periodicities', 'chiF_1_clusters_2_periodicities', 'chiF_2_clusters_2_periodicities', 'chiF_3_clusters_2_periodicities', 'chiF_1_clusters_3_periodicities', 'chiF_2_clusters_3_periodicities', 'chiF_3_clusters_3_periodicities', 'chiF_1_clusters_4_periodicities', 'chiF_2_clusters_4_periodicities', 'chiF_3_clusters_4_periodicities']
-models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities', 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
+# models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities', 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
 #models = ['RAL2020_3_clusters_3_periodicities']
 #models = ['occ_grid']
-models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities']#, 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
+# models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities']#, 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
 
 
 #result_dir = 'output_for_3rd_version'
 result_dir = 'output_for_3rd_version_CEST'
-model_dir = '/home/tom/pro/my/whyte_branches/2020_test_for_icra_RAL/models'
+model_dir = '../models'
 
 
 edges_of_cell = [0.5, 0.5]
@@ -73,7 +73,7 @@ speed = 1.
 
 for model in models:
     #break # delete me :)
-    print 'testing  ' + model
+    print('testing  ' + model)
     # creating path for the outputs of planner
     try:
         os.mkdir('../results/' + result_dir)
@@ -95,7 +95,7 @@ for model in models:
 
 for model in models:
 
-    print '\n statistics of ' + model
+    print('\n statistics of ' + model)
     output_path = '../results/' + result_dir + '/' + str(model) + '_output.txt'
     #summarize.summarize(output_path)
     summarize_new.summarize(output_path)

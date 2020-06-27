@@ -19,9 +19,9 @@ for idx, text_file_to_ananlyze in enumerate(list_of_outputs):
     ordering_by_lower_mean_weight = np.min(data[:, [-3, -2]], axis=1)  
     ordered_kills = data[ordering_by_lower_mean_weight.argsort(kind='mergesort'), -1]  # ordering kills by weights
     cummulative_kills = np.cumsum(ordered_kills)
-    print(labels[idx])
-    print('90%: ' + str(cummulative_kills[int(len(cummulative_kills)*0.9)]))
-    print('50%: ' + str(cummulative_kills[int(len(cummulative_kills)*0.5)]))
+    print((labels[idx]))
+    print(('90%: ' + str(cummulative_kills[int(len(cummulative_kills)*0.9)])))
+    print(('50%: ' + str(cummulative_kills[int(len(cummulative_kills)*0.5)])))
     # values... for later use (ttest, sum of cumsum)
     values.append(cummulative_kills)
     # plot
@@ -39,12 +39,12 @@ plt.savefig('cummulative_kills.eps')
 plt.close()
 
 # ttest between STeFF and WHyTe
-print(ttest_rel(values[1], values[0])[1])
-print(ttest_rel(values[3], values[2])[1])
+print((ttest_rel(values[1], values[0])[1]))
+print((ttest_rel(values[3], values[2])[1]))
 # sum of cumsum (japanese porn with very fat actors)
-print('dummy: ' + str(np.sum(values[0])))
-print('CLiFF: ' + str(np.sum(values[1])))
-print('WHyTe: ' + str(np.sum(values[2])))
-print('STeF: ' + str(np.sum(values[3])))
+print(('dummy: ' + str(np.sum(values[0]))))
+print(('CLiFF: ' + str(np.sum(values[1]))))
+print(('WHyTe: ' + str(np.sum(values[2]))))
+print(('STeF: ' + str(np.sum(values[3]))))
 
 

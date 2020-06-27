@@ -91,7 +91,7 @@ class PathFinder:
         directions = [0.0, np.pi / 4, np.pi / 2, 3 * np.pi / 4, np.pi, -3 * np.pi / 4, -np.pi / 2, -np.pi / 4]
         self.trajectory = []
         time = start_time
-        for i in xrange(1, self.shortest_path_real.shape[0]):
+        for i in range(1, self.shortest_path_real.shape[0]):
             if self.shortest_path_real[i - 1, 0] == self.shortest_path_real[i, 0] and self.shortest_path_real[i - 1, 1] == self.shortest_path_real[i, 1]:
                 continue
             distance = (((self.shortest_path_real[i - 1, 0] - self.shortest_path_real[i, 0]) ** 2) + ((self.shortest_path_real[i - 1, 1] - self.shortest_path_real[i, 1]) ** 2)) ** 0.5
@@ -125,8 +125,8 @@ class PathFinder:
                 angle = directions[7]
             else:
                 print('diffs are different')
-                print('x_diff: ' + str(x_diff))
-                print('y_diff: ' + str(y_diff))
+                print(('x_diff: ' + str(x_diff)))
+                print(('y_diff: ' + str(y_diff)))
             for t in times:
                 x = x + x_step
                 y = y + y_step
@@ -145,7 +145,7 @@ class PathFinder:
         rows, columns = self.get_indexes(route)
         route = list(zip(rows, columns))  # destination nodes
         try:
-            for i in xrange(1, len(route)):
+            for i in range(1, len(route)):
                 src = route[i-1]
                 dst = route[i]
                 self.shortest_path.extend(list(networkx.dijkstra_path(self.graph, src, dst)))
@@ -155,7 +155,7 @@ class PathFinder:
             self.shortest_path_real[:,1] = self.x_min + self.edges_of_cell[0]*self.shortest_path_real[:,1] - self.edges_of_cell[0]*0.5
             self.shortest_path_real = self.shortest_path_real[:,::-1]
         except networkx.NetworkXError:
-            print "no path!"
+            print("no path!")
 
 
     def extract_interactions(self, data, radius, create_video=False, time_step=0.1):
@@ -198,7 +198,7 @@ class PathFinder:
 
     def get_mean_path_weight(self):
         total_weight = 0.
-        for i in xrange(len(self.shortest_path)-1):
+        for i in range(len(self.shortest_path)-1):
             weight = self.graph.get_edge_data(self.shortest_path[i], self.shortest_path[i+1])
             if weight != None:
                 total_weight += weight['weight']

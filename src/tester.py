@@ -1,7 +1,6 @@
 import numpy as np
 #import path_finder as pf
 import path_finder_new as pf
-import make_video
 #import warnings
 from time import time
 
@@ -217,10 +216,10 @@ if __name__ == "__main__":
     start = time()
     tester = Tester(radius_of_robot=1.)
     finish = time()
-    print('zero part: ' + str(finish-start))
+    print(('zero part: ' + str(finish-start)))
     
     edges_of_cell = np.array([0.5, 0.5])
     start = time()
-    print tester.test_model('../models/1_cluster_9_periods/1554105994_model.txt', '../data/time_windows/1554105994_test_data.txt', testing_time=1554105994, model_name='WHyTeS', edges_of_cell=edges_of_cell, speed=1.0, create_video=False)
+    print(tester.test_model('../models/1_cluster_9_periods/1554105994_model.txt', '../data/time_windows/1554105994_test_data.txt', testing_time=1554105994, model_name='WHyTeS', edges_of_cell=edges_of_cell, speed=1.0, create_video=False))
     finish = time()
-    print('first&second part: ' + str(finish-start))
+    print(('first&second part: ' + str(finish-start)))

@@ -14,11 +14,11 @@ def summarize(text_file_to_analyze):
     ordering_by_lower_mean_weight = np.min(data[:, [-3, -2]], axis=1)  
     ordered_kills = data[ordering_by_lower_mean_weight.argsort(kind='mergesort'), -1]  # ordering kills by weights
     cummulative_kills = np.cumsum(ordered_kills)
-    print('expected service social cost: ' + str(np.mean(cummulative_kills)))
-    print('service social cost, servicing ratio 100%: ' + str(cummulative_kills[-1]))
-    print('service social cost, servicing ratio 90%: ' + str(cummulative_kills[int(len(cummulative_kills)*0.9)]))
-    print('service social cost, servicing ratio 50%: ' + str(cummulative_kills[int(len(cummulative_kills)*0.5)]))
-    print('expected encounters: ' + str(np.sum(cummulative_kills)/len(cummulative_kills)))
+    print(('expected service social cost: ' + str(np.mean(cummulative_kills))))
+    print(('service social cost, servicing ratio 100%: ' + str(cummulative_kills[-1])))
+    print(('service social cost, servicing ratio 90%: ' + str(cummulative_kills[int(len(cummulative_kills)*0.9)])))
+    print(('service social cost, servicing ratio 50%: ' + str(cummulative_kills[int(len(cummulative_kills)*0.5)])))
+    print(('expected encounters: ' + str(np.sum(cummulative_kills)/len(cummulative_kills))))
 
     plt.plot(cummulative_kills)
     plt.savefig(text_file_to_analyze + '.png')
