@@ -61,10 +61,15 @@ models = ['published_ral_3_clusters_3_periodicities']
 #models = ['RAL2020_3_clusters_3_periodicities']
 #models = ['occ_grid']
 # models = ['published_ral_3_clusters_3_periodicities', 'published_cliffmap_model_pq', 'published_predictions_stef_euc_o2', 'ral_variant_3_clusters_2_periodicities']#, 'model_daily_histogram', 'model_segment_means', 'model_weekly_histogram', 'model_prophet']
+models = ['ral_variant_3_clusters_2_periodicities']
+models = ['cost_F_3_clusters_3_periodicities']
+models = ['published_predictions_stef_euc_o2']
+
 
 
 #result_dir = 'output_for_3rd_version'
 result_dir = 'output'
+#result_dir = 'output_CET'
 model_dir = '../models'
 
 
@@ -88,6 +93,7 @@ for model in models:
         path_model = model_dir + '/' + str(model) + '/' + str(time) + '_model.txt'
         #path_model = model_dir + '/' + str(model) + '/' + str(time) + '_model.txt.npy'
         test_data_path = '../data/time_windows/' + str(time) + '_test_data.txt'
+        #test_data_path = '../data/time_windows_CET/' + str(time) + '_test_data.txt'
         #test_data_path = '../data/time_windows_winter/' + str(time) + '_test_data.txt'
         result = tester.test_model(path_model=path_model, path_data=test_data_path, testing_time=time, model_name=model, edges_of_cell=edges_of_cell, speed=speed, create_video=False)
         with open(output_path, 'a') as file:
