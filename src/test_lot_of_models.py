@@ -86,21 +86,21 @@ def test_with_different_params(model, speeds=(1, ), radii_of_robot=(1, ), weight
                 output_path = result_dir + '/' + current_model + '_output.txt'
                 outputs.append(output_path)
 
-                # if os.path.exists(output_path):
-                #     os.remove(output_path)
-                #
-                # for time in times:
-                #     path_model = model_dir + '/' + str(model) + '/' + str(time) + '_model.txt'
-                #     test_data_path = test_dir + str(time) + '_test_data.txt'
-                #     result = tester.test_model(path_model=path_model, path_data=test_data_path, testing_time=time,
-                #                                model_name=model, edges_of_cell=edges_of_cell, speed=speed,
-                #                                weighted_encounters=weighted_encounters)
-                #     with open(output_path, 'a') as file:
-                #         file.write(' '.join(str(value) for value in result) + '\n')
-                #
-                # print('\n statistics of {} with speed={}m/s, r={}m and weighted encounters set to {}.'.format(
-                #     model, speed, radius_of_robot, weighted_encounters))
-                #
-                # summarize(output_path)
+                if os.path.exists(output_path):
+                    os.remove(output_path)
+                
+                for time in times:
+                    path_model = model_dir + '/' + str(model) + '/' + str(time) + '_model.txt'
+                    test_data_path = test_dir + str(time) + '_test_data.txt'
+                    result = tester.test_model(path_model=path_model, path_data=test_data_path, testing_time=time,
+                                               model_name=model, edges_of_cell=edges_of_cell, speed=speed,
+                                               weighted_encounters=weighted_encounters)
+                    with open(output_path, 'a') as file:
+                        file.write(' '.join(str(value) for value in result) + '\n')
+                
+                print('\n statistics of {} with speed={}m/s, r={}m and weighted encounters set to {}.'.format(
+                    model, speed, radius_of_robot, weighted_encounters))
+                
+                summarize(output_path)
 
     plot_all(outputs, models, result_dir + 'models.png')
