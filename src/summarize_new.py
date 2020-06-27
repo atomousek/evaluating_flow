@@ -63,8 +63,8 @@ def plot_all(model_results, labels, filename):
     plt.legend()
     plt.xlabel('service tasks percentage')
     plt.ylabel('cummulative number of encounters')
-    plt.show()
     plt.savefig(filename)
+    plt.show()
     plt.close()
 
 
