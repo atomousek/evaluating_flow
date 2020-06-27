@@ -64,7 +64,7 @@ models = ['published_ral_3_clusters_3_periodicities']
 
 
 #result_dir = 'output_for_3rd_version'
-result_dir = 'output_for_3rd_version_CEST'
+result_dir = 'output'
 model_dir = '../models'
 
 

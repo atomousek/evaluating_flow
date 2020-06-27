@@ -3,7 +3,8 @@ from networkx.exception import NetworkXError
 import numpy as np
 import warnings
 import pandas as pd
-from time import time, clock
+from time import time
+from time import perf_counter as clock
 
 
 
