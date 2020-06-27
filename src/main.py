@@ -12,8 +12,8 @@ def main():
 
     # test_models(models=models, speed=speed, radius_of_robot=radius_of_robot, weighted_encounters=weighted_encounters)
     test_with_different_params('published_ral_3_clusters_3_periodicities',
-                               radii_of_robot=(1., 2.),
-                               speeds=(0.5, 1.),
+                               radii_of_robot=(1.,),
+                               speeds=(0.5, 1.0),
                                weighted_encounters_opts=(False, ))
 
 

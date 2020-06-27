@@ -79,9 +79,9 @@ def test_with_different_params(model, speeds=(1, ), radii_of_robot=(1, ), weight
                 tester = Tester(radius_of_robot=radius_of_robot)
                 times = np.loadtxt(times_path, dtype='int')
 
-                print('speed: ' + str(speed))
-                print('radius_of_robot: ' + str(radius_of_robot))
-                print('weighted_encounters: ' + str(weighted_encounters))
+                #print('speed: ' + str(speed))
+                #print('radius_of_robot: ' + str(radius_of_robot))
+                #print('weighted_encounters: ' + str(weighted_encounters))
 
                 output_path = result_dir + '/' + current_model + '_output.txt'
                 outputs.append(output_path)
@@ -103,4 +103,4 @@ def test_with_different_params(model, speeds=(1, ), radii_of_robot=(1, ), weight
                 
                 summarize(output_path)
 
-    plot_all(outputs, models, result_dir + '/models.png')
+    plot_all(outputs, models, result_dir + '/' + model + '_params.png')

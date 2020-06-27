@@ -66,8 +66,8 @@ class Tester:
         # counter-clockwise
         path_finder.find_shortest_path(route=reverse_route)
         weight_2 = path_finder.get_mean_path_weight()
-        path_finder.extract_trajectory(testing_time, speed=speed)
-        result_2 = path_finder.extract_interactions(test_data, radius=self.radius_of_robot, weighted_encounters=weighted_encounters)
+        path_finder.extract_trajectory(testing_time, speed=speed, time_step=0.1/speed)
+        result_2 = path_finder.extract_interactions(test_data, radius=self.radius_of_robot, weighted_encounters=weighted_encounters, time_step=0.1/speed)
 
         ### the third part creates an output
         

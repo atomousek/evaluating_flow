@@ -90,7 +90,7 @@ class PathFinder:
         self.graph.remove_nodes_from(list(zip(rows, columns)))
 
 
-    def extract_trajectory(self, start_time, speed, time_step=0.1):
+    def extract_trajectory(self, start_time, speed, time_step):
         directions = [0.0, np.pi / 4, np.pi / 2, 3 * np.pi / 4, np.pi, -3 * np.pi / 4, -np.pi / 2, -np.pi / 4]
         self.trajectory = []
         time = start_time
@@ -158,7 +158,7 @@ class PathFinder:
             print("no path!")
 
 
-    def extract_interactions(self, data, radius, weighted_encounters, time_step=0.1):
+    def extract_interactions(self, data, radius, weighted_encounters, time_step):
         radius2 = radius * radius
         #interactions = []
         if weighted_encounters:
