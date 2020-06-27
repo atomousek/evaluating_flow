@@ -49,8 +49,15 @@ class PathFinder:
 
 
     def create_graph(self):
-        
-        rounding_error = 0.001
+        """
+        objective:
+            to transform data into the graph (using pandas dataframe)
+        input:
+            None, derived from the self.model
+        output:
+            None, creates self.graph
+        """
+        rounding_error = 0.001  # for the computational consistency
         angles = self.model[:, 2]
         # for every x, y, angle we have a weight
         # x, y here is destination node
@@ -62,8 +69,6 @@ class PathFinder:
         yf = (angles < -rounding_error+0.0) & (angles > rounding_error-np.pi)  # y falls
         dg = (xr & yr) | (xr & yf) | (xf & yr) | (xf & yf)  # diagonal edge
         # changing real coordinates to indexes (becouse of dijkstra)
-        #x = ((self.model[:, 0] - self.x_min)/self.edges_of_cell[0]+1).astype(int)
-        #y = ((self.y_max-self.model[:, 1])/self.edges_of_cell[1]+1).astype(int)
         rows, columns = self.get_indexes(self.model[:, :2])
         # creating weights and tuples of indices in virtual table
         # y -> rows, x -> columns (reason is visualisation)
@@ -77,13 +82,17 @@ class PathFinder:
         df['weight'] = wgt
         # create graph
         self.graph = networkx.from_pandas_edgelist(df, 0, 1, 'weight', create_using=networkx.DiGraph)
-        
 
-        
-    def creat_graph(self, dummy=False):
-        self.create_graph()
 
     def remove_walls(self, walls):
+        """
+        objective:
+            to remove walls from the graph (impassable)
+        input:
+            walls ... np.array 2xn, spatial coordinates of walls 
+        output:
+            None, changes self.graph
+        """
         rows, columns = self.get_indexes(walls)
         self.graph.remove_nodes_from(list(zip(rows, columns)))
 
@@ -131,8 +140,7 @@ class PathFinder:
             for t in times:
                 x = x + x_step
                 y = y + y_step
-                #self.trajectory.append((t, x, y, 2, 2))  # kontakty
-                self.trajectory.append((t, x, y, 2, 2, angle))  # uhly
+                self.trajectory.append((t, x, y, 2, 2, angle))
 
 
             time = time_next
