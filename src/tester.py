@@ -38,7 +38,7 @@ class Tester:
         route = np.array([(-5.0, 9.75), (2.0, 2.75), (-7.0, 0.75), (-5.0, 9.75)])  # clockwise route
         reverse_route = np.array([(-5.0, 9.75), (-7.0, 0.75), (2.0, 2.75), (-5.0, 9.75)])   # counter-clockwise route
         # define walls that cannot be crossed
-        path_borders = '../data/artificial_boarders_of_space_in_UTBM.txt'
+        path_borders = '../data2/artificial_boarders_of_space_in_UTBM.txt'
         walls = pd.read_csv(path_borders, sep=' ', header=None, engine='c').values
         # load model, it can be txt or npy file
         if path_model.rsplit('.', 1)[1] == 'txt':
