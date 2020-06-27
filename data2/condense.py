@@ -42,7 +42,7 @@ for i in range(len(times) // 2):
                     f1.write(f2.read())
                 else:
                     f1.write(f2.read())
-    
+
     os.remove(test_dir + "{}_test_data.txt".format(int(t2)))
 
 

@@ -7,13 +7,6 @@ from time import time
 from time import perf_counter as clock
 
 
-
-
-
-
-
-
-
 class PathFinder:
 
     def __init__(self, model_data, edges_of_cell):

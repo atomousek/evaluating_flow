@@ -34,6 +34,40 @@ def summarize(text_file_to_analyze):
     plt.close()
 
 
+def plot_all(model_results, labels, filename):
+    for idx, text_file_to_ananlyze in enumerate(model_results):
+
+        # load of outputs
+        data_load = np.loadtxt(text_file_to_ananlyze)
+        data = np.empty_like(data_load)
+
+        # ordering the rows randomly (to simulate the random choice when the weights are identical for different times)
+        np.copyto(data, data_load[np.random.rand(len(data)).argsort(kind='mergesort'), :])
+
+        # ordering kills by the weights
+        ordering_by_lower_mean_weight = np.min(data[:, [-3, -2]], axis=1)
+        ordered_kills = data[ordering_by_lower_mean_weight.argsort(kind='mergesort'), -1]  # ordering kills by weights
+        cummulative_kills = np.cumsum(ordered_kills)
+
+        # plot
+        plt.plot(cummulative_kills, label=labels[idx])
+
+    # redefine x axis from number of scenarios to percentage
+
+    x = np.arange(11) * 60
+    xi = np.arange(11) * 10
+    plt.xticks(x, xi)
+
+    # some titles, need to be changed
+    plt.title('cummulative number of encounters\n ordered by the mean weight of selected paths')
+    plt.legend()
+    plt.xlabel('service tasks percentage')
+    plt.ylabel('cummulative number of encounters')
+    plt.show()
+    plt.savefig(filename)
+    plt.close()
+
+
 """
 
     # POKUS SPECIFICKY PRO DATA !!!
