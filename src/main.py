@@ -10,7 +10,7 @@ def main():
     #          'published_predictions_stef_euc_o2', 'model_daily_histogram',
     #          'model_segment_means', 'model_weekly_histogram', 'model_prophet']
 
-    models = ['CLiFF', 'Means', 'occ_grid', 'Prophet', 'STeF', 'WHyTeS']
+    models = ['CLiFF', 'Histogram day', 'Histogram week', 'Means', 'occ_grid', 'Prophet', 'STeF', 'WHyTeS']
 
     test_models(models=models, speed=speed, radius_of_robot=radius_of_robot, weighted_encounters=weighted_encounters)
     #test_with_different_params('CLiFF',
