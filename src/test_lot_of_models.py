@@ -47,7 +47,7 @@ def test_models(models=default_models, speed=1, radius_of_robot=1, weighted_enco
         output_path = result_dir + '/' + str(model) + '_output.txt'
         summarize(output_path)
 
-    plot_all([result_dir + '/' + str(model) + '_output.txt' for model in models], models, result_dir + '/models.png')
+    plot_all([result_dir + '/' + str(model) + '_output.txt' for model in models], models, result_dir + '/models.pdf')
 
 
 def test_with_different_params(model, speeds=(1, ), radii_of_robot=(1, ), weighted_encounters_opts=(False, )):
@@ -103,4 +103,4 @@ def test_with_different_params(model, speeds=(1, ), radii_of_robot=(1, ), weight
                 
                 summarize(output_path)
 
-    plot_all(outputs, models, result_dir + '/' + model + '_params.png')
+    plot_all(outputs, models, result_dir + '/' + model + '_params.pdf')

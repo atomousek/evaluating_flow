@@ -59,10 +59,10 @@ def plot_all(model_results, labels, filename):
     plt.xticks(x, xi)
 
     # some titles, need to be changed
-    plt.title('cummulative number of encounters\n ordered by the mean weight of selected paths')
+    plt.title('Dependence of service disturbance\n on servicing ratio')
     plt.legend()
-    plt.xlabel('service tasks percentage')
-    plt.ylabel('cummulative number of encounters')
+    plt.xlabel('Servicing ratio [%]')
+    plt.ylabel('Service disturbance [encounters]')
     plt.savefig(filename)
     plt.show()
     plt.close()
