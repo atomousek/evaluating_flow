@@ -18,8 +18,8 @@ def main():
                                radii_of_robot=(1.0,),
                                #speeds=(0.5, 0.75, 1.0, 1.25),
                                speeds=(0.5,),
-                               weighted_encounters_opts=(True, False))
-                               #weighted_encounters_opts=(True,))
+                               #weighted_encounters_opts=(True, False))
+                               weighted_encounters_opts=(True,))
 
 
 if __name__ == '__main__':
