@@ -8,7 +8,7 @@ def test_many_models():
     weighted_encounters = True
 
     # choose models
-    models = ['CLiFF', 'Histogram day', 'Histogram week', 'Means', 'occ_grid', 'Prophet', 'STeF', 'WHyTeS']
+    models = ['CLiFF-Map', 'Histogram day', 'Histogram week', 'Means', 'Occupancy grid', 'Prophet', 'STeF-Map', 'WHyTeS']
 
     # run the tests
     test_models(models=models, speed=speed, radius_of_robot=radius_of_robot, weighted_encounters=weighted_encounters)
