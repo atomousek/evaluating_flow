@@ -34,4 +34,4 @@ if __name__ == '__main__':
     Specify the desired parameters and models in the functions called below
     """
     test_many_models()
-    test_different_parameters()
+    #test_different_parameters()
