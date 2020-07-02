@@ -1,5 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
 import os
 
 np.random.seed(6666)
@@ -59,7 +62,10 @@ def plot_all(model_results, labels, filename):
     plt.xticks(x, xi)
 
     # some titles, need to be changed
-    plt.title('Dependence of service disturbance\n on servicing ratio')
+    #plt.rc('text', usetex=True)
+    #plt.rc('font', family='serif')
+    #plt.rcParams['text.latex.preamble']=[r"\usepackage{lmodern}"]
+    plt.title('Dependence of service disturbance on servicing ratio')
     plt.legend()
     plt.xlabel('Servicing ratio [%]')
     plt.ylabel('Service disturbance [encounters]')

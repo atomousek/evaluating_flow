@@ -7,8 +7,8 @@ list_of_times = np.loadtxt('../data2/test_times.txt')
 dataset_dir = '../data2/time_windows/'
 models_dir = '../models2/'
 
-models = ['CLiFF', 'Histogram day', 'Histogram week', 'Means', 'occ_grid', 'Prophet', 'STeF', 'WHyTeS']
-#models = ['WHyTeS']
+models = ['CLiFF-Map', 'Histogram day', 'Histogram week', 'Means', 'Occupancy grid', 'Prophet', 'STeF-Map', 'WHyTeS']
+#models = ['Occupancy grid', 'Means','CLiFF-Map']
 
 angle_edges = np.array([0.5, 0.5, np.pi/4.0])
 no_bins = np.array([24, 33, 8])
