@@ -8,12 +8,8 @@ def test_many_models():
     weighted_encounters = True
 
     # choose models
-    #models = ['CLiFF-Map', 'Histogram day', 'Histogram week', 'Means', 'Occupancy grid', 'Prophet', 'STeF-Map', 'WHyTeS']
-    #models = ['Occupancy grid', 'Means','CLiFF-Map']
-    #models = ['Histogram week', 'Prophet', 'WHyTeS', 'STeF-Map', 'Histogram day']
-    #models = ['Occupancy grid', 'Histogram week', 'Means', 'CLiFF-Map', 'Prophet', 'WHyTeS', 'STeF-Map', 'Histogram day']
-    models = ['Histogram day', 'STeF-Map', 'WHyTeS', 'Prophet', 'CLiFF-Map', 'Means', 'Histogram week', 'Occupancy grid']
-
+    models = ['CLiFF-Map', 'Histogram day', 'Histogram week', 'Means', 'Occupancy grid', 'Prophet', 'STeF-Map', 'WHyTeS']
+    
     # run the tests
     test_models(models=models, speed=speed, radius_of_robot=radius_of_robot, weighted_encounters=weighted_encounters)
 
@@ -38,4 +34,4 @@ if __name__ == '__main__':
     Specify the desired parameters and models in the functions called below
     """
     test_many_models()
-    #test_different_parameters()
+    test_different_parameters()
