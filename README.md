@@ -1,6 +1,6 @@
 # Natural  Criteria  for  Pedestrian  Flow  Forecasting  Models  Comparison
 
-This repository contains testing scripts and testing data used for model evaluation through social disturbance benchmark. Additionally, models evaluated in RAL paper are included.
+This repository contains testing scripts and testing data used for model evaluation through social disturbance benchmark. Additionally, models evaluated in paper are included.
 
 The scripts enable to evaluate the models with different experiment parameters.
 
